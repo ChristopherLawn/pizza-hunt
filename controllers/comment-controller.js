@@ -4,7 +4,7 @@ const commentController = {
     // add comment to pizza
     addComment({ params, body }, res) {
         console.log(body);
-        Comment.create(body)
+        Comment.create(body, { new: true })
             .then(({ _id }) => {
                 return Pizza.findOneAndUpdate(
                     { _id: params.pizzaId },
@@ -26,7 +26,7 @@ const commentController = {
         Comment.findOneAndUpdate(
           { _id: params.commentId },
           { $push: { replies: body } },
-          { new: true }
+          { new: true, runValidators: true }
         )
           .then(dbPizzaData => {
             if (!dbPizzaData) {
@@ -50,7 +50,7 @@ const commentController = {
 
     // remove comment
     removeComment({ params }, res) {
-        Comment.findOneAndDelete({ _id: params.commentId })
+        Comment.findOneAndDelete({ _id: params.commentId } )
             .then(deletedComment => {
                 if (!deletedComment) {
                     return res.status(404).json({ message: 'No comment with that ID!' });
