@@ -40,8 +40,7 @@ const CommentSchema = new Schema(
     },
     commentBody: {
       type: String,
-      required: true,
-      trim: true
+      required: true
     },
     createdAt: {
       type: Date,

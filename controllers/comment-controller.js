@@ -4,8 +4,9 @@ const commentController = {
     // add comment to pizza
     addComment({ params, body }, res) {
         console.log(body);
-        Comment.create(body, { new: true })
+        Comment.create(body)
             .then(({ _id }) => {
+                (console.log(_id))
                 return Pizza.findOneAndUpdate(
                     { _id: params.pizzaId },
                     { $push: { comments: _id } },
